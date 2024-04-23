@@ -1,10 +1,12 @@
 package br.com.fiap.motos.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -14,10 +16,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
+@Table(name = "TB_VEICULO", uniqueConstraints = {
+        @UniqueConstraint(name = "UK_VEICULO_UNIDADE", columnNames = {"UNIDADE", "DT_FIM"}),
+})
+@Entity
 public class Veiculo {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SQ_VEICULO")
+    @SequenceGenerator(name = "SQ_VEICULO"), sequenceName = "SQ_VEICULO", allocationSize = 1)
+    @Column(name = "ID_VEICULO")
     private Long id;
+
+    @Column(name = "ST_SUBSTITUTO")
+    private Boolean substituto;
 
     private String nome;
 
